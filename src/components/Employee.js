@@ -1,11 +1,15 @@
 export default function Employee({ employee }) {
   return (
-    <div>
+    <tr>
       {Object.keys(employee).map((key) => (
-        <span key={key}>
-          {key}:{employee[key]}
-        </span>
+        <td key={key}>{employee[key]}</td>
       ))}
-    </div>
+      <td>
+        <button className="bg-blue-400 rounded">Edit</button>
+      </td>
+      <td>
+        <button className="bg-red-400 rounded">Delete</button>
+      </td>
+    </tr>
   );
 }
