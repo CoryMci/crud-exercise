@@ -1,9 +1,11 @@
 import Employee from "./Employee";
+import EmployeeForm from "./EmployeeForm";
 
 export default function EmployeeList({ employees }) {
   return (
     <div>
       <button className="bg-green-400 rounded">New Employee</button>
+      <EmployeeForm></EmployeeForm>
       <table className="bg-slate-200 border border-slate-700">
         <tbody>
           <tr>

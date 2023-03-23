@@ -20,6 +20,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors(corsOptions));
+app.use(express.urlencoded({ extended: false })); // to allow URLencoded data
 
 app.use("/api", employeeRouter);
 

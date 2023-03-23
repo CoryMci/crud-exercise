@@ -1,14 +1,34 @@
 import axios from "axios";
 
-export async function loadEmployees() {
-  const connection = axios.create({
-    baseURL: "http://localhost:8080/api/",
-    timeout: 5000,
-  });
+const connection = axios.create({
+  baseURL: "http://localhost:8080/api/",
+});
 
+export async function loadEmployees() {
   try {
     const response = await connection.get("/employees");
     return response.data;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function newEmployee(employee) {
+  console.log(employee);
+  try {
+    const employeeInfo = new URLSearchParams({
+      id: employee.id,
+      name: employee.name,
+      code: employee.code,
+      profession: employee.profession,
+      color: employee.color,
+      branch: employee.branch,
+      city: employee.city,
+      assigned: employee.assigned,
+    });
+
+    const response = await connection.post("/employees/", employeeInfo);
+    return response;
   } catch (err) {
     throw err;
   }
