@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { newEmployee } from "../lib/crud";
 
-export default function EmployeeForm() {
+export default function EmployeeForm({ refreshEmployees }) {
   const [formData, setFormData] = useState({
     id: "",
     name: "",
@@ -28,6 +28,7 @@ export default function EmployeeForm() {
     console.log(formData);
     try {
       await newEmployee(formData);
+      refreshEmployees();
     } catch (error) {
       console.log(error);
       console.log(error.message);

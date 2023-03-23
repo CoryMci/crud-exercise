@@ -14,7 +14,6 @@ export async function loadEmployees() {
 }
 
 export async function newEmployee(employee) {
-  console.log(employee);
   try {
     const employeeInfo = new URLSearchParams({
       id: employee.id,
@@ -28,6 +27,15 @@ export async function newEmployee(employee) {
     });
 
     const response = await connection.post("/employees/", employeeInfo);
+    return response;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function deleteEmployee(employee) {
+  try {
+    const response = await connection.delete(`/employees/${employee.id}`);
     return response;
   } catch (err) {
     throw err;

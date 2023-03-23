@@ -3,7 +3,7 @@ import useLoadEmployees from "./hooks/useLoadEmployees";
 import EmployeeList from "./components/EmployeeList";
 
 export default function App() {
-  const { employees, loading, refresh, setRefresh, crudError } =
+  const { employees, loading, refreshEmployees, crudError } =
     useLoadEmployees();
 
   return (
@@ -15,7 +15,10 @@ export default function App() {
       ) : crudError ? (
         <div>An error occured: {crudError.message}</div>
       ) : (
-        <EmployeeList employees={employees} />
+        <EmployeeList
+          employees={employees}
+          refreshEmployees={refreshEmployees}
+        />
       )}
     </div>
   );

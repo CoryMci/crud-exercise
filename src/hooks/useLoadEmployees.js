@@ -7,6 +7,10 @@ export default function useLoadEmployees() {
   const [refresh, setRefresh] = useState(false);
   const [crudError, setCrudError] = useState(null);
 
+  const refreshEmployees = function () {
+    setRefresh(!refresh);
+  };
+
   useEffect(() => {
     (async () => {
       try {
@@ -20,5 +24,5 @@ export default function useLoadEmployees() {
     })(); //immediately invoked async function to prevent returning a promise to the useEffect hook.
   }, [refresh]);
 
-  return { employees, loading, refresh, setRefresh, crudError };
+  return { employees, loading, refreshEmployees, crudError };
 }
