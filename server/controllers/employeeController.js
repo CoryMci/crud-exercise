@@ -67,3 +67,21 @@ exports.employee_edit = async function (req, res, next) {
     return res.status(500).json({ error: error.message });
   }
 };
+
+exports.employee_delete = async function (req, res, next) {
+  try {
+    const existingEmployee = await Employee.findOne({ id: req.params.id });
+
+    if (!existingEmployee) {
+      return res.status(404).json({ message: "Employee not found" });
+    }
+
+    await existingEmployee.remove();
+
+    return res.status(200).json({
+      message: "Employee successfully deleted",
+    });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+};
