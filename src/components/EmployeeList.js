@@ -55,8 +55,10 @@ export default function EmployeeList({
         accessor: "city",
       },
       {
+        id: "assigned",
         Header: "Assigned",
-        accessor: "assigned",
+        // To display boolean value in cell
+        accessor: (d) => d.assigned.toString(),
       },
       {
         id: "edit",

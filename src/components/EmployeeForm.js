@@ -80,7 +80,6 @@ export default function EmployeeForm({
       console.log(error.message);
     }
   }
-  console.log(formData);
   return (
     <div
       className="fixed w-screen h-screen z-50 bg-black bg-opacity-30 shadow-md flex items-center justify-center"
