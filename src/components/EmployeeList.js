@@ -47,10 +47,6 @@ export default function EmployeeList({
         accessor: "profession",
       },
       {
-        Header: "Color",
-        accessor: "color",
-      },
-      {
         Header: "Branch",
         accessor: "branch",
       },
@@ -68,7 +64,7 @@ export default function EmployeeList({
           return (
             <button
               className="bg-blue-400 text-white rounded w-20 py-1"
-              onClick={() => handleEditEmployee(row.values)}
+              onClick={() => handleEditEmployee(row.original)}
             >
               Edit
             </button>
@@ -148,16 +144,24 @@ export default function EmployeeList({
             // Loop over the table rows
             rows.map((row) => {
               // Prepare the row for display
+              //inline style used for dynamic css rendering
+              const style = {
+                boxShadow: `inset 10px 0px 0px ${row.original.color}`,
+              };
               prepareRow(row);
               return (
                 // Apply the row props
-                <tr className="hover:bg-slate-100" {...row.getRowProps()}>
+                <tr style={style} className="" {...row.getRowProps()}>
                   {
                     // Loop over the rows cells
                     row.cells.map((cell) => {
                       // Apply the cell props
+
                       return (
-                        <td className="p-2" {...cell.getCellProps()}>
+                        <td
+                          className="p-2 pl-4 opacity-100"
+                          {...cell.getCellProps()}
+                        >
                           {
                             // Render the cell contents
                             cell.render("Cell")

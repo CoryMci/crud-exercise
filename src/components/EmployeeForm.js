@@ -80,7 +80,7 @@ export default function EmployeeForm({
       console.log(error.message);
     }
   }
-
+  console.log(formData);
   return (
     <div
       className="fixed w-screen h-screen z-50 bg-black bg-opacity-30 shadow-md flex items-center justify-center"
@@ -156,19 +156,6 @@ export default function EmployeeForm({
             />
           </div>
           <div className="flex flex-col">
-            <label htmlFor="color" className="mb-1 ml-1 text-sm font-semibold">
-              Color
-            </label>
-            <input
-              className="border border-slate-300 rounded w-full p-2"
-              type="text"
-              id="color"
-              name="color"
-              value={formData.color}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="flex flex-col">
             <label htmlFor="branch" className="mb-1 ml-1 text-sm font-semibold">
               Branch
             </label>
@@ -191,6 +178,19 @@ export default function EmployeeForm({
               id="city"
               name="city"
               value={formData.city}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="color" className="mb-1 ml-1 text-sm font-semibold">
+              Color
+            </label>
+            <input
+              className="border border-slate-300 rounded w-10 h-10 p-2"
+              type="color"
+              id="color"
+              name="color"
+              value={formData.color}
               onChange={handleChange}
             />
           </div>
