@@ -54,7 +54,7 @@ export default function EmployeeList({ employees, refreshEmployees }) {
         Cell: ({ row }) => {
           return (
             <button
-              className="bg-red-400 rounded"
+              className="bg-red-400 rounded p-1"
               onClick={() => handleDeleteEmployee(row.values.id)}
             >
               Delete
@@ -75,6 +75,7 @@ export default function EmployeeList({ employees, refreshEmployees }) {
     <div>
       <EmployeeForm refreshEmployees={refreshEmployees}></EmployeeForm>
       <table
+        className="border border-slate-500"
         {
           // apply the table props
           ...getTableProps()
@@ -86,12 +87,15 @@ export default function EmployeeList({ employees, refreshEmployees }) {
             // Loop over the header rows
             headerGroups.map((headerGroup) => (
               // Apply the header row props
-              <tr {...headerGroup.getHeaderGroupProps()}>
+              <tr
+                className="border border-slate-500"
+                {...headerGroup.getHeaderGroupProps()}
+              >
                 {
                   // Loop over the headers in each row
                   headerGroup.headers.map((column) => (
                     // Apply the header cell props
-                    <th {...column.getHeaderProps()}>
+                    <th className="p-2" {...column.getHeaderProps()}>
                       {
                         // Render the header
                         column.render("Header")
@@ -112,13 +116,13 @@ export default function EmployeeList({ employees, refreshEmployees }) {
               prepareRow(row);
               return (
                 // Apply the row props
-                <tr {...row.getRowProps()}>
+                <tr className="hover:bg-slate-100" {...row.getRowProps()}>
                   {
                     // Loop over the rows cells
                     row.cells.map((cell) => {
                       // Apply the cell props
                       return (
-                        <td {...cell.getCellProps()}>
+                        <td className="p-2" {...cell.getCellProps()}>
                           {
                             // Render the cell contents
                             cell.render("Cell")
