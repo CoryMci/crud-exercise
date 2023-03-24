@@ -33,9 +33,9 @@ export async function newEmployee(employee) {
   }
 }
 
-export async function deleteEmployee(employee) {
+export async function deleteEmployee(employeeId) {
   try {
-    const response = await connection.delete(`/employees/${employee.id}`);
+    const response = await connection.delete(`/employees/${employeeId}`);
     return response;
   } catch (err) {
     throw err;

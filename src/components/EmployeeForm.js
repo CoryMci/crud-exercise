@@ -25,7 +25,7 @@ export default function EmployeeForm({ refreshEmployees }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log(formData);
+
     try {
       await newEmployee(formData);
       refreshEmployees();
