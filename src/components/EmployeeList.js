@@ -98,15 +98,19 @@ export default function EmployeeList({
     tableInstance;
 
   return (
-    <div className="w-screen flex flex-col gap-2 items-center">
-      <button
-        className="bg-green-400 text-white rounded w-20 py-1"
-        onClick={() => handleCreateEmployee()}
-      >
-        New
-      </button>
+    <div className="flex flex-col gap-2 mx-auto pt-8 lg:w-5/6 overflow-auto">
+      <div className="flex w-full">
+        <h1 className="flex-grow font-semibold indent-2">Plexxis Employees</h1>
+        <button
+          className="bg-green-400 text-white rounded p-2 self-end mx-16"
+          onClick={() => handleCreateEmployee()}
+        >
+          New Employee
+        </button>
+      </div>
+
       <table
-        className="border border-slate-500 w-5/6"
+        className="border border-slate-500 bg-white w-full shadow-md"
         {
           // apply the table props
           ...getTableProps()

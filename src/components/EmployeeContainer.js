@@ -11,7 +11,7 @@ export default function EmployeeContainer() {
     useLoadEmployees();
 
   return (
-    <div>
+    <div className="">
       {formVisibility ? (
         <EmployeeForm
           setFormVisibility={setFormVisibility}
@@ -22,7 +22,6 @@ export default function EmployeeContainer() {
       ) : (
         ""
       )}
-      <h1>Plexxis Employees</h1>
       {loading ? (
         <div>Loading...</div>
       ) : crudError ? (

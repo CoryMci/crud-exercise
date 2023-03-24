@@ -83,7 +83,7 @@ export default function EmployeeForm({
 
   return (
     <div
-      className="fixed w-screen h-screen z-50 bg-black bg-opacity-30 flex items-center justify-center"
+      className="fixed w-screen h-screen z-50 bg-black bg-opacity-30 shadow-md flex items-center justify-center"
       onClick={handleCloseForm}
     >
       <div
