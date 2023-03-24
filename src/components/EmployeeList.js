@@ -1,5 +1,3 @@
-import Employee from "./Employee";
-import EmployeeForm from "./EmployeeForm";
 import { deleteEmployee } from "../lib/crud";
 import { useMemo } from "react";
 import { useTable } from "react-table";
@@ -54,7 +52,7 @@ export default function EmployeeList({ employees, refreshEmployees }) {
         Cell: ({ row }) => {
           return (
             <button
-              className="bg-red-400 rounded p-1"
+              className="bg-red-400 text-white rounded p-2"
               onClick={() => handleDeleteEmployee(row.values.id)}
             >
               Delete
@@ -72,10 +70,9 @@ export default function EmployeeList({ employees, refreshEmployees }) {
     tableInstance;
 
   return (
-    <div>
-      <EmployeeForm refreshEmployees={refreshEmployees}></EmployeeForm>
+    <div className="w-screen flex justify-center">
       <table
-        className="border border-slate-500"
+        className="border border-slate-500 max-w-screen-xl"
         {
           // apply the table props
           ...getTableProps()
