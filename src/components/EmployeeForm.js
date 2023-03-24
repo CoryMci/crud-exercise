@@ -11,14 +11,14 @@ export default function EmployeeForm({
     name: "",
     code: "",
     profession: "",
-    color: "",
+    color: "#000000",
     branch: "",
     city: "",
     assigned: false,
   };
 
   const [formData, setFormData] = useState(emptyForm);
-  const [validationError, setValidationError] = useState(null); //TODO add validation in handlechange fn
+  const [validationError, setValidationError] = useState({});
 
   useEffect(() => {
     //effect used to update form data with employee data
@@ -43,29 +43,71 @@ export default function EmployeeForm({
     }
 
     //reset form data
-    setFormData({
-      id: "",
-      name: "",
-      code: "",
-      profession: "",
-      color: "",
-      branch: "",
-      city: "",
-      assigned: false,
-    });
+    setFormData(emptyForm);
     setFormVisibility(false);
   }
 
-  function handleChange(e) {
+  function handleInput(e) {
     const { name, value, type, checked } = e.target;
-    setFormData({
+
+    //seperate object so we can refer to up-to-date data
+    const currentData = {
       ...formData,
       [name]: type === "checkbox" ? checked : value, //to handle checkbox status
-    });
+    };
+
+    setFormData(currentData);
+
+    //if there are existing errors, check validation on each input.
+    const errors = validateForm(currentData);
+    if (Object.keys(validationError).length > 0) {
+      setValidationError(errors);
+    }
+  }
+
+  function validateForm(formData) {
+    //using error obj instead of validationError to prevent multiple state changes
+    const errors = {};
+
+    const idPattern = /^\d{1,4}$/;
+    if (!formData.id || !idPattern.test(formData.id)) {
+      errors.id = "ID must be between 1 and 4 digits.";
+    }
+
+    const codePattern = /^[A-Z]\d{3}$/;
+    if (!formData.code || !codePattern.test(formData.code)) {
+      errors.code = "Code should be a capital letter followed by 3 digits.";
+    }
+
+    const wordPattern = /^[a-z A-Z]{3,25}$/;
+    if (!formData.name || !wordPattern.test(formData.name)) {
+      errors.name = "Name should be between 3 and 25 letters.";
+    }
+
+    if (!formData.profession || !wordPattern.test(formData.profession)) {
+      errors.profession = "Profession should be between 3 and 25 letters.";
+    }
+
+    if (!formData.branch || !wordPattern.test(formData.branch)) {
+      errors.branch = "Branch should be between 3 and 25 letters.";
+    }
+
+    if (!formData.city || !wordPattern.test(formData.city)) {
+      errors.city = "City should be between 3 and 25 letters.";
+    }
+
+    return errors;
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
+
+    //validation
+    const errors = validateForm(formData);
+    if (Object.keys(errors).length > 0) {
+      setValidationError(errors);
+      return;
+    }
 
     try {
       if (editingEmployee) {
@@ -100,88 +142,95 @@ export default function EmployeeForm({
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-2">
           <div className="flex flex-col">
-            <label htmlFor="id" className="mb-1 ml-1 text-sm font-semibold">
-              ID
-            </label>
+            <div className="flex mb-1 ml-1 text-xs font-semibold">
+              <label htmlFor="id">ID</label>
+              <div className="text-red-600 ml-8">{validationError.id}</div>
+            </div>
             <input
               className="border border-slate-300 rounded w-full p-2"
               type="text"
               id="id"
               name="id"
               value={formData.id}
-              onChange={handleChange}
+              onChange={handleInput}
             />
           </div>
           <div className="flex flex-col">
-            <label htmlFor="name" className="mb-1 ml-1 text-sm font-semibold">
-              Name
-            </label>
+            <div className="flex mb-1 ml-1 text-xs font-semibold">
+              <label htmlFor="name" className="mb-1 ml-1 text-xs font-semibold">
+                Name
+              </label>
+              <div className="text-red-600 ml-8">{validationError.name}</div>
+            </div>
             <input
               className="border border-slate-300 rounded w-full p-2"
               type="text"
               id="name"
               name="name"
               value={formData.name}
-              onChange={handleChange}
+              onChange={handleInput}
             />
           </div>
           <div className="flex flex-col">
-            <label htmlFor="code" className="mb-1 ml-1 text-sm font-semibold">
-              Code
-            </label>
+            <div className="flex mb-1 ml-1 text-xs font-semibold">
+              <label htmlFor="code">Code</label>
+              <div className="text-red-600 ml-8">{validationError.code}</div>
+            </div>
             <input
               className="border border-slate-300 rounded w-full p-2"
               type="text"
               id="code"
               name="code"
               value={formData.code}
-              onChange={handleChange}
+              onChange={handleInput}
             />
           </div>
           <div className="flex flex-col">
-            <label
-              htmlFor="profession"
-              className="mb-1 ml-1 text-sm font-semibold"
-            >
-              Profession
-            </label>
+            <div className="flex mb-1 ml-1 text-xs font-semibold">
+              <label htmlFor="profession">Profession</label>
+              <div className="text-red-600 ml-8">
+                {validationError.profession}
+              </div>
+            </div>
             <input
               className="border border-slate-300 rounded w-full p-2"
               type="text"
               id="profession"
               name="profession"
               value={formData.profession}
-              onChange={handleChange}
+              onChange={handleInput}
             />
           </div>
           <div className="flex flex-col">
-            <label htmlFor="branch" className="mb-1 ml-1 text-sm font-semibold">
-              Branch
-            </label>
+            <div className="flex mb-1 ml-1 text-xs font-semibold">
+              <label htmlFor="branch">Branch</label>
+              <div className="text-red-600 ml-8">{validationError.branch}</div>
+            </div>
             <input
               className="border border-slate-300 rounded w-full p-2"
               type="text"
               id="branch"
               name="branch"
               value={formData.branch}
-              onChange={handleChange}
+              onChange={handleInput}
             />
           </div>
           <div className="flex flex-col">
-            <label htmlFor="city" className="mb-1 ml-1 text-sm font-semibold">
-              City
-            </label>
+            <div className="flex mb-1 ml-1 text-xs font-semibold">
+              <label htmlFor="city">City</label>
+              <div className="text-red-600 ml-8">{validationError.city}</div>
+            </div>
             <input
               className="border border-slate-300 rounded w-full p-2"
               type="text"
               id="city"
               name="city"
               value={formData.city}
-              onChange={handleChange}
+              onChange={handleInput}
             />
           </div>
           <div className="flex flex-col">
-            <label htmlFor="color" className="mb-1 ml-1 text-sm font-semibold">
+            <label htmlFor="color" className="mb-1 ml-1 text-xs font-semibold">
               Color
             </label>
             <input
@@ -190,16 +239,16 @@ export default function EmployeeForm({
               id="color"
               name="color"
               value={formData.color}
-              onChange={handleChange}
+              onChange={handleInput}
             />
           </div>
-          <label className="inline-flex items-center">
+          <label className="inline-flex items-center text-xs font-semibold">
             <input
               className="mr-2"
               type="checkbox"
               name="assigned"
               checked={formData.assigned}
-              onChange={handleChange}
+              onChange={handleInput}
             />
             Assigned
           </label>
