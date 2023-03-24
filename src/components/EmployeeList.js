@@ -2,14 +2,29 @@ import { deleteEmployee } from "../lib/crud";
 import { useMemo } from "react";
 import { useTable } from "react-table";
 
-export default function EmployeeList({ employees, refreshEmployees }) {
-  const handleDeleteEmployee = async function (employeeId) {
+export default function EmployeeList({
+  employees,
+  refreshEmployees,
+  setEditEmployee,
+  setFormVisibility,
+}) {
+  const handleDeleteEmployee = async function (employee) {
     try {
-      await deleteEmployee(employeeId);
+      await deleteEmployee(employee);
       await refreshEmployees();
     } catch (error) {
       console.log(error.message);
     }
+  };
+
+  const handleCreateEmployee = function () {
+    setEditEmployee(null);
+    setFormVisibility(true);
+  };
+
+  const handleEditEmployee = function (employee) {
+    setEditEmployee(employee);
+    setFormVisibility(true);
   };
 
   const data = useMemo(() => employees, [employees]);
@@ -48,12 +63,25 @@ export default function EmployeeList({ employees, refreshEmployees }) {
         accessor: "assigned",
       },
       {
+        id: "edit",
+        Cell: ({ row }) => {
+          return (
+            <button
+              className="bg-blue-400 text-white rounded w-20 py-1"
+              onClick={() => handleEditEmployee(row.values)}
+            >
+              Edit
+            </button>
+          );
+        },
+      },
+      {
         id: "delete",
         Cell: ({ row }) => {
           return (
             <button
-              className="bg-red-400 text-white rounded p-2"
-              onClick={() => handleDeleteEmployee(row.values.id)}
+              className="bg-red-400 text-white rounded w-20 py-1"
+              onClick={() => handleDeleteEmployee(row.values)}
             >
               Delete
             </button>
@@ -70,9 +98,15 @@ export default function EmployeeList({ employees, refreshEmployees }) {
     tableInstance;
 
   return (
-    <div className="w-screen flex justify-center">
+    <div className="w-screen flex flex-col gap-2 items-center">
+      <button
+        className="bg-green-400 text-white rounded w-20 py-1"
+        onClick={() => handleCreateEmployee()}
+      >
+        New
+      </button>
       <table
-        className="border border-slate-500 max-w-screen-xl"
+        className="border border-slate-500 w-5/6"
         {
           // apply the table props
           ...getTableProps()

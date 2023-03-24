@@ -33,9 +33,31 @@ export async function newEmployee(employee) {
   }
 }
 
-export async function deleteEmployee(employeeId) {
+export async function deleteEmployee(employee) {
   try {
-    const response = await connection.delete(`/employees/${employeeId}`);
+    const response = await connection.delete(`/employees/${employee.id}`);
+    return response;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function editEmployee(employee) {
+  try {
+    const employeeInfo = new URLSearchParams({
+      id: employee.id,
+      name: employee.name,
+      code: employee.code,
+      profession: employee.profession,
+      color: employee.color,
+      branch: employee.branch,
+      city: employee.city,
+      assigned: employee.assigned,
+    });
+    const response = await connection.put(
+      `/employees/${employee.id}`,
+      employeeInfo
+    );
     return response;
   } catch (err) {
     throw err;

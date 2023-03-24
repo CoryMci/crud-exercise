@@ -1,8 +1,12 @@
-import { useState } from "react";
-import { newEmployee } from "../lib/crud";
+import { useEffect, useState } from "react";
+import { newEmployee, editEmployee } from "../lib/crud";
 
-export default function EmployeeForm({ refreshEmployees, setFormVisibility }) {
-  const [formData, setFormData] = useState({
+export default function EmployeeForm({
+  refreshEmployees,
+  setFormVisibility,
+  editEmployee: editingEmployee,
+}) {
+  const emptyForm = {
     id: "",
     name: "",
     code: "",
@@ -11,13 +15,44 @@ export default function EmployeeForm({ refreshEmployees, setFormVisibility }) {
     branch: "",
     city: "",
     assigned: false,
-  });
+  };
 
+  const [formData, setFormData] = useState(emptyForm);
   const [validationError, setValidationError] = useState(null); //TODO add validation in handlechange fn
 
+  useEffect(() => {
+    //effect used to update form data with employee data
+    if (editingEmployee) {
+      setFormData(editingEmployee);
+    } else {
+      setFormData(emptyForm);
+    }
+  }, [editingEmployee]);
+
   function handleCloseForm(e) {
-    //prevents clicks from affecting elements outside of form
-    e.stopPropagation();
+    if (e) {
+      //prevents clicks from affecting elements outside of form
+      e.stopPropagation();
+      //https://github.com/facebook/react/issues/3907#issuecomment-363948471
+      // prevents Enter key from closing form
+      if (e.detail === 0) {
+        e.preventDefault();
+        handleSubmit(e);
+        return;
+      }
+    }
+
+    //reset form data
+    setFormData({
+      id: "",
+      name: "",
+      code: "",
+      profession: "",
+      color: "",
+      branch: "",
+      city: "",
+      assigned: false,
+    });
     setFormVisibility(false);
   }
 
@@ -33,7 +68,12 @@ export default function EmployeeForm({ refreshEmployees, setFormVisibility }) {
     e.preventDefault();
 
     try {
-      await newEmployee(formData);
+      if (editingEmployee) {
+        await editEmployee(formData);
+      } else {
+        await newEmployee(formData);
+      }
+      handleCloseForm();
       refreshEmployees();
     } catch (error) {
       console.log(error);
@@ -55,7 +95,9 @@ export default function EmployeeForm({ refreshEmployees, setFormVisibility }) {
           }
         }
       >
-        <h1 className="text-lg font-bold mb-4">New Employee</h1>
+        <h1 className="text-lg font-bold mb-4">
+          {editingEmployee ? "Edit Employee" : "New Employee"}
+        </h1>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-2">
           <div className="flex flex-col">
@@ -173,7 +215,7 @@ export default function EmployeeForm({ refreshEmployees, setFormVisibility }) {
               className="bg-blue-400 text-white rounded flex-grow py-2"
               type="submit"
             >
-              Submit
+              Save
             </button>
           </div>
         </form>
