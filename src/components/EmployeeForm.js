@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { newEmployee, editEmployee } from "../lib/crud";
+import TextInputField from "./TextInputField";
 
 export default function EmployeeForm({
   refreshEmployees,
@@ -141,94 +142,48 @@ export default function EmployeeForm({
         </h1>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-2">
-          <div className="flex flex-col">
-            <div className="flex mb-1 ml-1 text-xs font-semibold">
-              <label htmlFor="id">ID</label>
-              <div className="text-red-600 ml-8">{validationError.id}</div>
-            </div>
-            <input
-              className="border border-slate-300 rounded w-full p-2"
-              type="text"
-              id="id"
-              name="id"
-              value={formData.id}
-              onChange={handleInput}
-            />
-          </div>
-          <div className="flex flex-col">
-            <div className="flex mb-1 ml-1 text-xs font-semibold">
-              <label htmlFor="name" className="mb-1 ml-1 text-xs font-semibold">
-                Name
-              </label>
-              <div className="text-red-600 ml-8">{validationError.name}</div>
-            </div>
-            <input
-              className="border border-slate-300 rounded w-full p-2"
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleInput}
-            />
-          </div>
-          <div className="flex flex-col">
-            <div className="flex mb-1 ml-1 text-xs font-semibold">
-              <label htmlFor="code">Code</label>
-              <div className="text-red-600 ml-8">{validationError.code}</div>
-            </div>
-            <input
-              className="border border-slate-300 rounded w-full p-2"
-              type="text"
-              id="code"
-              name="code"
-              value={formData.code}
-              onChange={handleInput}
-            />
-          </div>
-          <div className="flex flex-col">
-            <div className="flex mb-1 ml-1 text-xs font-semibold">
-              <label htmlFor="profession">Profession</label>
-              <div className="text-red-600 ml-8">
-                {validationError.profession}
-              </div>
-            </div>
-            <input
-              className="border border-slate-300 rounded w-full p-2"
-              type="text"
-              id="profession"
-              name="profession"
-              value={formData.profession}
-              onChange={handleInput}
-            />
-          </div>
-          <div className="flex flex-col">
-            <div className="flex mb-1 ml-1 text-xs font-semibold">
-              <label htmlFor="branch">Branch</label>
-              <div className="text-red-600 ml-8">{validationError.branch}</div>
-            </div>
-            <input
-              className="border border-slate-300 rounded w-full p-2"
-              type="text"
-              id="branch"
-              name="branch"
-              value={formData.branch}
-              onChange={handleInput}
-            />
-          </div>
-          <div className="flex flex-col">
-            <div className="flex mb-1 ml-1 text-xs font-semibold">
-              <label htmlFor="city">City</label>
-              <div className="text-red-600 ml-8">{validationError.city}</div>
-            </div>
-            <input
-              className="border border-slate-300 rounded w-full p-2"
-              type="text"
-              id="city"
-              name="city"
-              value={formData.city}
-              onChange={handleInput}
-            />
-          </div>
+          <TextInputField
+            id="id"
+            label="ID"
+            value={formData.id}
+            error={validationError.id}
+            onChange={handleInput}
+          />
+          <TextInputField
+            id="name"
+            label="Name"
+            value={formData.name}
+            error={validationError.name}
+            onChange={handleInput}
+          />
+          <TextInputField
+            id="code"
+            label="Code"
+            value={formData.code}
+            error={validationError.code}
+            onChange={handleInput}
+          />
+          <TextInputField
+            id="profession"
+            label="Profession"
+            value={formData.profession}
+            error={validationError.profession}
+            onChange={handleInput}
+          />
+          <TextInputField
+            id="branch"
+            label="Branch"
+            value={formData.branch}
+            error={validationError.branch}
+            onChange={handleInput}
+          />
+          <TextInputField
+            id="city"
+            label="City"
+            value={formData.city}
+            error={validationError.city}
+            onChange={handleInput}
+          />
           <div className="flex flex-col">
             <label htmlFor="color" className="mb-1 ml-1 text-xs font-semibold">
               Color
