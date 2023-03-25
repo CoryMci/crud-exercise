@@ -11,7 +11,7 @@ export default function EmployeeList({
   const handleDeleteEmployee = async function (employee) {
     try {
       await deleteEmployee(employee);
-      await refreshEmployees();
+      refreshEmployees();
     } catch (error) {
       console.log(error.message);
     }
