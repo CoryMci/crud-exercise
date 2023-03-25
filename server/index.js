@@ -1,19 +1,11 @@
 const express = require("express");
 const cors = require("cors");
 const employeeRouter = require("./routes/employeeRoute");
-require("dotenv").config();
 
 var corsOptions = {
   origin: "http://localhost:3000",
   optionsSuccessStatus: 200,
 };
-
-//set up mongoose connection
-const mongoose = require("mongoose");
-const mongoDB = process.env.URI;
-mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 const app = express();
 
