@@ -5,7 +5,7 @@ import TextInputField from "./TextInputField";
 export default function EmployeeForm({
   refreshEmployees,
   setFormVisibility,
-  editEmployee: editingEmployee,
+  editingEmployee,
 }) {
   const emptyForm = {
     id: "",

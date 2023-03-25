@@ -5,7 +5,7 @@ import { useSortBy, useTable } from "react-table";
 export default function EmployeeList({
   employees,
   refreshEmployees,
-  setEditEmployee,
+  setEditingEmployee,
   setFormVisibility,
 }) {
   const handleDeleteEmployee = async function (employee) {
@@ -18,12 +18,12 @@ export default function EmployeeList({
   };
 
   const handleCreateEmployee = function () {
-    setEditEmployee(null);
+    setEditingEmployee(null);
     setFormVisibility(true);
   };
 
   const handleEditEmployee = function (employee) {
-    setEditEmployee(employee);
+    setEditingEmployee(employee);
     setFormVisibility(true);
   };
 
@@ -66,7 +66,7 @@ export default function EmployeeList({
           return (
             <button
               className="bg-blue-400 text-white rounded w-20 py-1"
-              onClick={() => handleEditEmployee(row.original)}
+              onClick={() => handleEditEmployee(row.values)}
             >
               Edit
             </button>

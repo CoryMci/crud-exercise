@@ -5,7 +5,7 @@ import { useState } from "react";
 
 export default function EmployeeContainer() {
   const [formVisibility, setFormVisibility] = useState(false);
-  const [editEmployee, setEditEmployee] = useState(null);
+  const [editingEmployee, setEditingEmployee] = useState(null);
 
   const { employees, loading, refreshEmployees, crudError } =
     useLoadEmployees();
@@ -16,8 +16,8 @@ export default function EmployeeContainer() {
         <EmployeeForm
           setFormVisibility={setFormVisibility}
           refreshEmployees={refreshEmployees}
-          editEmployee={editEmployee}
-          setEditEmployee={setEditEmployee}
+          editingEmployee={editingEmployee}
+          setEditEmployee={setEditingEmployee}
         ></EmployeeForm>
       ) : (
         ""
@@ -30,7 +30,7 @@ export default function EmployeeContainer() {
         <EmployeeList
           employees={employees}
           refreshEmployees={refreshEmployees}
-          setEditEmployee={setEditEmployee}
+          setEditingEmployee={setEditingEmployee}
           setFormVisibility={setFormVisibility}
         />
       )}
