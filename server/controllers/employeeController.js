@@ -1,8 +1,9 @@
 const Employee = require("../models/employee");
+const sqlite = require("../lib/sqlite");
 
 exports.employee_list = async function (req, res, next) {
   try {
-    const employees = await Employee.find({});
+    const employees = await sqlite.asyncQuery("SELECT * FROM employees");
     return res.status(200).json(employees);
   } catch (error) {
     console.log(error);
@@ -12,29 +13,37 @@ exports.employee_list = async function (req, res, next) {
 
 exports.employee_create = async function (req, res, next) {
   try {
-    const existingEmployee = await Employee.findOne({ id: req.body.id });
+    const existingEmployee = await sqlite.asyncQuery(
+      "SELECT * FROM employees WHERE id = ?",
+      [req.body.id]
+    );
 
-    if (existingEmployee) {
+    if (existingEmployee.length > 0) {
       return res
         .status(300)
         .json({ message: "Employee already exists with that id!" });
     }
 
-    const employee = new Employee({
-      id: req.body.id,
-      name: req.body.name,
-      code: req.body.code,
-      profession: req.body.profession,
-      color: req.body.color,
-      branch: req.body.branch,
-      city: req.body.city,
-      assigned: req.body.assigned,
+    await sqlite.asyncQuery(
+      "INSERT INTO employees (id, name, code, profession, color, branch, city, assigned) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+      [
+        req.body.id,
+        req.body.name,
+        req.body.code,
+        req.body.profession,
+        req.body.color,
+        req.body.branch,
+        req.body.city,
+        req.body.assigned,
+      ]
+    );
+
+    return res.status(200).json({
+      message: "Employee successfully created!",
+      employee: req.body,
     });
-    await employee.save();
-    return res
-      .status(200)
-      .json({ message: "Employee successfully created!", employee: employee });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ error: error.message });
   }
 };
