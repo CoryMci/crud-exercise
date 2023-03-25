@@ -112,7 +112,7 @@ export default function EmployeeForm({
 
     try {
       if (editingEmployee) {
-        await editEmployee(formData);
+        await editEmployee(editingEmployee.id, formData);
       } else {
         await newEmployee(formData);
       }

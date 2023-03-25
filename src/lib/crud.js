@@ -42,7 +42,7 @@ export async function deleteEmployee(employee) {
   }
 }
 
-export async function editEmployee(employee) {
+export async function editEmployee(employeeId, employee) {
   try {
     const employeeInfo = new URLSearchParams({
       id: employee.id,
@@ -55,7 +55,7 @@ export async function editEmployee(employee) {
       assigned: employee.assigned,
     });
     const response = await connection.put(
-      `/employees/${employee.id}`,
+      `/employees/${employeeId}`,
       employeeInfo
     );
     return response;

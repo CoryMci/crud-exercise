@@ -50,27 +50,50 @@ exports.employee_create = async function (req, res, next) {
 
 exports.employee_edit = async function (req, res, next) {
   try {
-    const existingEmployee = await Employee.findOne({ id: req.params.id });
+    const existingEmployee = await sqlite.asyncQuery(
+      "SELECT * FROM employees WHERE id = ?",
+      [req.params.id]
+    );
 
-    if (!existingEmployee) {
+    if (existingEmployee.length === 0) {
       return res.status(404).json({ message: "Employee not found" });
     }
 
-    existingEmployee.id = req.body.id || existingEmployee.id;
-    existingEmployee.name = req.body.name || existingEmployee.name;
-    existingEmployee.code = req.body.code || existingEmployee.code;
-    existingEmployee.profession =
-      req.body.profession || existingEmployee.profession;
-    existingEmployee.color = req.body.color || existingEmployee.color;
-    existingEmployee.branch = req.body.branch || existingEmployee.branch;
-    existingEmployee.city = req.body.city || existingEmployee.city;
-    existingEmployee.assigned = req.body.assigned || existingEmployee.assigned;
+    if (req.body.id !== req.params.id) {
+      const IdTaken = await sqlite.asyncQuery(
+        "SELECT * FROM employees WHERE id = ?",
+        [req.body.id]
+      );
 
-    const updatedEmployee = await existingEmployee.save();
+      if (IdTaken.length > 0) {
+        return res
+          .status(400)
+          .json({ message: "The new employee ID is already taken" });
+      }
+    }
+
+    await sqlite.asyncQuery(
+      "UPDATE employees SET id = ?, name = ?, code = ?, profession = ?, color = ?, branch = ?, city = ?, assigned = ? WHERE id = ?",
+      [
+        req.body.id || existingEmployee[0].id,
+        req.body.name || existingEmployee[0].name,
+        req.body.code || existingEmployee[0].code,
+        req.body.profession || existingEmployee[0].profession,
+        req.body.color || existingEmployee[0].color,
+        req.body.branch || existingEmployee[0].branch,
+        req.body.city || existingEmployee[0].city,
+        req.body.assigned || existingEmployee[0].assigned,
+        req.params.id,
+      ]
+    );
+    const updatedEmployee = await sqlite.asyncQuery(
+      "SELECT * FROM employees WHERE id = ?",
+      [req.body.id || existingEmployee[0].id]
+    );
 
     return res.status(200).json({
       message: "Employee successfully updated",
-      Employee: updatedEmployee,
+      employee: updatedEmployee[0],
     });
   } catch (error) {
     return res.status(500).json({ error: error.message });
@@ -79,13 +102,18 @@ exports.employee_edit = async function (req, res, next) {
 
 exports.employee_delete = async function (req, res, next) {
   try {
-    const existingEmployee = await Employee.findOne({ id: req.params.id });
+    const existingEmployee = await sqlite.asyncQuery(
+      "SELECT * FROM employees WHERE id = ?",
+      [req.params.id]
+    );
 
-    if (!existingEmployee) {
+    if (existingEmployee.length === 0) {
       return res.status(404).json({ message: "Employee not found" });
     }
 
-    await existingEmployee.remove();
+    await sqlite.asyncQuery("DELETE FROM employees WHERE id = ?", [
+      req.params.id,
+    ]);
 
     return res.status(200).json({
       message: "Employee successfully deleted",
