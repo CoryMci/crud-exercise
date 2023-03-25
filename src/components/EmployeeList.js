@@ -1,6 +1,6 @@
 import { deleteEmployee } from "../lib/crud";
 import { useMemo } from "react";
-import { useTable } from "react-table";
+import { useSortBy, useTable } from "react-table";
 
 export default function EmployeeList({
   employees,
@@ -58,7 +58,7 @@ export default function EmployeeList({
         id: "assigned",
         Header: "Assigned",
         // To display boolean value in cell
-        accessor: (d) => d.assigned.toString(),
+        accessor: (d) => (d.assigned ? "Yes" : "No"),
       },
       {
         id: "edit",
@@ -90,7 +90,7 @@ export default function EmployeeList({
     []
   );
 
-  const tableInstance = useTable({ columns, data });
+  const tableInstance = useTable({ columns, data }, useSortBy);
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableInstance;
@@ -128,11 +128,18 @@ export default function EmployeeList({
                   // Loop over the headers in each row
                   headerGroup.headers.map((column) => (
                     // Apply the header cell props
-                    <th className="p-2" {...column.getHeaderProps()}>
-                      {
-                        // Render the header
-                        column.render("Header")
-                      }
+                    <th
+                      className="p-2"
+                      {...column.getHeaderProps(column.getSortByToggleProps())}
+                    >
+                      {column.render("Header")}{" "}
+                      <span>
+                        {column.isSorted
+                          ? column.isSortedDesc
+                            ? " 🔽"
+                            : " 🔼"
+                          : ""}
+                      </span>
                     </th>
                   ))
                 }
@@ -164,10 +171,7 @@ export default function EmployeeList({
                           className="p-2 pl-4 opacity-100"
                           {...cell.getCellProps()}
                         >
-                          {
-                            // Render the cell contents
-                            cell.render("Cell")
-                          }
+                          {cell.render("Cell")}
                         </td>
                       );
                     })
