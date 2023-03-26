@@ -1,6 +1,6 @@
-import useLoadEmployees from "../hooks/useLoadEmployees";
+import useLoadEmployees from "../../hooks/useLoadEmployees";
 import EmployeeList from "./EmployeeList";
-import EmployeeForm from "./EmployeeForm";
+import EmployeeForm from "./EmployeeForm/EmployeeForm";
 import { useState } from "react";
 
 export default function EmployeeContainer() {

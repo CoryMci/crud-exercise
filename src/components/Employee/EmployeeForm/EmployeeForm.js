@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import { newEmployee, editEmployee } from "../lib/crud";
+import { newEmployee, editEmployee } from "../../../lib/crud";
+import Checkbox from "./Checkbox";
+import ColorField from "./ColorField";
 import TextInputField from "./TextInputField";
 
 export default function EmployeeForm({
@@ -24,7 +26,11 @@ export default function EmployeeForm({
   useEffect(() => {
     //effect used to update form data with employee data
     if (editingEmployee) {
-      setFormData(editingEmployee);
+      console.log(editingEmployee);
+      setFormData({
+        ...editingEmployee,
+        assigned: editingEmployee.assigned === "true" ? true : false, // convert string boolean
+      });
     } else {
       setFormData(emptyForm);
     }
@@ -50,7 +56,6 @@ export default function EmployeeForm({
 
   function handleInput(e) {
     const { name, value, type, checked } = e.target;
-
     //seperate object so we can refer to up-to-date data
     const currentData = {
       ...formData,
@@ -184,29 +189,21 @@ export default function EmployeeForm({
             error={validationError.city}
             onChange={handleInput}
           />
-          <div className="flex flex-col">
-            <label htmlFor="color" className="mb-1 ml-1 text-xs font-semibold">
-              Color
-            </label>
-            <input
-              className="border border-slate-300 rounded w-10 h-10 p-2"
-              type="color"
+          <div className="flex gap-8">
+            <ColorField
               id="color"
-              name="color"
+              label="Color"
               value={formData.color}
               onChange={handleInput}
             />
-          </div>
-          <label className="inline-flex items-center text-xs font-semibold">
-            <input
-              className="mr-2"
-              type="checkbox"
-              name="assigned"
-              checked={formData.assigned}
+            <Checkbox
+              id="assigned"
+              label="Assigned"
+              value={formData.assigned}
               onChange={handleInput}
             />
-            Assigned
-          </label>
+          </div>
+
           <div className="flex gap-2">
             <button
               onClick={handleCloseForm}

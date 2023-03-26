@@ -1,4 +1,4 @@
-import { deleteEmployee } from "../lib/crud";
+import { deleteEmployee } from "../../lib/crud";
 import { useMemo } from "react";
 import { useSortBy, useTable } from "react-table";
 
@@ -58,7 +58,7 @@ export default function EmployeeList({
         id: "assigned",
         Header: "Assigned",
         // To display boolean value in cell
-        accessor: (d) => (d.assigned ? "Yes" : "No"),
+        accessor: (d) => (d.assigned === "true" ? "Yes" : "No"),
       },
       {
         id: "edit",
@@ -66,7 +66,7 @@ export default function EmployeeList({
           return (
             <button
               className="bg-blue-400 text-white rounded w-20 py-1"
-              onClick={() => handleEditEmployee(row.values)}
+              onClick={() => handleEditEmployee(row.original)}
             >
               Edit
             </button>
