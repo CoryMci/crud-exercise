@@ -1,4 +1,4 @@
-import { deleteEmployee } from "../../lib/crud";
+import { deleteEmployee } from "../../../lib/crud";
 import { useMemo } from "react";
 import { useSortBy, useTable } from "react-table";
 

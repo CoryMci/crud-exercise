@@ -1,5 +1,5 @@
 import useLoadEmployees from "../../hooks/useLoadEmployees";
-import EmployeeTable from "./EmployeeTable";
+import EmployeeTable from "./EmployeeTable/EmployeeTable";
 import EmployeeForm from "./EmployeeForm/EmployeeForm";
 import { useState } from "react";
 
@@ -12,15 +12,13 @@ export default function EmployeeContainer() {
 
   return (
     <div>
-      {formVisibility ? (
+      {formVisibility && (
         <EmployeeForm
           setFormVisibility={setFormVisibility}
           refreshEmployees={refreshEmployees}
           editingEmployee={editingEmployee}
           setEditEmployee={setEditingEmployee}
-        ></EmployeeForm>
-      ) : (
-        ""
+        />
       )}
       {loading ? (
         <div>Loading...</div>
