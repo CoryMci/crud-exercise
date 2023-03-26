@@ -1,5 +1,5 @@
 import useLoadEmployees from "../../hooks/useLoadEmployees";
-import EmployeeList from "./EmployeeList";
+import EmployeeTable from "./EmployeeTable";
 import EmployeeForm from "./EmployeeForm/EmployeeForm";
 import { useState } from "react";
 
@@ -11,7 +11,7 @@ export default function EmployeeContainer() {
     useLoadEmployees();
 
   return (
-    <div className="">
+    <div>
       {formVisibility ? (
         <EmployeeForm
           setFormVisibility={setFormVisibility}
@@ -27,7 +27,7 @@ export default function EmployeeContainer() {
       ) : crudError ? (
         <div>An error occured: {crudError.message}</div>
       ) : (
-        <EmployeeList
+        <EmployeeTable
           employees={employees}
           refreshEmployees={refreshEmployees}
           setEditingEmployee={setEditingEmployee}

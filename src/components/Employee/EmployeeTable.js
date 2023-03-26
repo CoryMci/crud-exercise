@@ -2,7 +2,7 @@ import { deleteEmployee } from "../../lib/crud";
 import { useMemo } from "react";
 import { useSortBy, useTable } from "react-table";
 
-export default function EmployeeList({
+export default function EmployeeTable({
   employees,
   refreshEmployees,
   setEditingEmployee,
@@ -10,8 +10,8 @@ export default function EmployeeList({
 }) {
   const handleDeleteEmployee = async function (employee) {
     try {
-      await deleteEmployee(employee);
-      refreshEmployees();
+      const response = await deleteEmployee(employee);
+      refreshEmployees(response);
     } catch (error) {
       console.log(error.message);
     }

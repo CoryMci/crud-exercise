@@ -26,7 +26,6 @@ export default function EmployeeForm({
   useEffect(() => {
     //effect used to update form data with employee data
     if (editingEmployee) {
-      console.log(editingEmployee);
       setFormData({
         ...editingEmployee,
         assigned: editingEmployee.assigned === "true" ? true : false, // convert string boolean
@@ -116,13 +115,14 @@ export default function EmployeeForm({
     }
 
     try {
+      let response;
       if (editingEmployee) {
-        await editEmployee(editingEmployee.id, formData);
+        response = await editEmployee(editingEmployee.id, formData);
       } else {
-        await newEmployee(formData);
+        response = await newEmployee(formData);
       }
       handleCloseForm();
-      refreshEmployees();
+      refreshEmployees(response);
     } catch (error) {
       console.log(error);
       console.log(error.message);

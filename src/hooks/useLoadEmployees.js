@@ -7,8 +7,8 @@ export default function useLoadEmployees() {
   const [refresh, setRefresh] = useState(false);
   const [crudError, setCrudError] = useState(null);
 
-  const refreshEmployees = function () {
-    setRefresh(!refresh);
+  const refreshEmployees = function (dependency) {
+    setRefresh(dependency);
   };
 
   useEffect(() => {
