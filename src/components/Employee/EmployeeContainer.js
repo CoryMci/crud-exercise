@@ -3,6 +3,7 @@ import EmployeeTable from "./EmployeeTable/EmployeeTable";
 import EmployeeForm from "./EmployeeForm/EmployeeForm";
 import { useState } from "react";
 import { deleteEmployee } from "../../lib/crud";
+import Modal from "../Modal";
 
 export default function EmployeeContainer() {
   const [formVisibility, setFormVisibility] = useState(false);
@@ -30,15 +31,20 @@ export default function EmployeeContainer() {
     setFormVisibility(true);
   };
 
+  const handleCloseForm = function () {
+    setFormVisibility(false);
+  };
+
   return (
     <>
       {formVisibility && (
-        <EmployeeForm
-          setFormVisibility={setFormVisibility}
-          refreshEmployees={refreshEmployees}
-          editingEmployee={editingEmployee}
-          setEditEmployee={setEditingEmployee}
-        />
+        <Modal close={handleCloseForm}>
+          <EmployeeForm
+            refreshEmployees={refreshEmployees}
+            editingEmployee={editingEmployee}
+            handleCloseForm={handleCloseForm}
+          />
+        </Modal>
       )}
       <div className="flex flex-col gap-2 mx-auto pt-8 lg:w-5/6 overflow-auto">
         <div className="flex w-full">
