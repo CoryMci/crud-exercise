@@ -3,7 +3,7 @@ import EmployeeTable from "./EmployeeTable/EmployeeTable";
 import EmployeeForm from "./EmployeeForm/EmployeeForm";
 import { useState } from "react";
 import { deleteEmployee } from "../../lib/crud";
-import Modal from "../Modal";
+import Modal from "../reusable/Modal";
 
 export default function EmployeeContainer() {
   const [formVisibility, setFormVisibility] = useState(false);
@@ -48,7 +48,7 @@ export default function EmployeeContainer() {
       )}
       <div className="flex flex-col gap-2 mx-auto pt-8 lg:w-5/6 overflow-auto">
         <div className="flex w-full">
-          <h1 className="flex-grow font-semibold indent-2">
+          <h1 className="flex-grow text-2xl font-semibold indent-2">
             Plexxis Employees
           </h1>
           <button

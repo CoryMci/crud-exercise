@@ -59,7 +59,10 @@ export default function EmployeeForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-2 max-h-screen overflow-auto"
+    >
       <h1 className="text-lg font-bold mb-4">
         {editingEmployee ? "Edit Employee" : "New Employee"}
       </h1>

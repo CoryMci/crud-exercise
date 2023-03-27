@@ -3,7 +3,7 @@ import EmployeeContainer from "./components/Employee/EmployeeContainer";
 
 export default function App() {
   return (
-    <div className="App w-screen h-screen bg-slate-100">
+    <div className="App w-screen">
       <EmployeeContainer />
     </div>
   );
