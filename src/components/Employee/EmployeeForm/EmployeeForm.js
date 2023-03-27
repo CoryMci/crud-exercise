@@ -109,11 +109,10 @@ export default function EmployeeForm({
           }
         }
       >
-        <h1 className="text-lg font-bold mb-4">
-          {editingEmployee ? "Edit Employee" : "New Employee"}
-        </h1>
-
         <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+          <h1 className="text-lg font-bold mb-4">
+            {editingEmployee ? "Edit Employee" : "New Employee"}
+          </h1>
           <TextInputField
             id="id"
             label="ID"
