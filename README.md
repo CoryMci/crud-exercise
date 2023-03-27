@@ -8,7 +8,7 @@ Create a simple but impressive (looks good, works well, has intuitive design, et
 2. ~~Display the employees in a React application~~
 3. ~~Has UI mechanisms for creating and deleting employees~~
 4. ~~Has API endpoints for creating and deleting employees~~
-5. Edit your version of the `README.md` file to explain to us what things you did, where you focussed your effort, etc.
+5. ~~Edit your version of the `README.md` file to explain to us what things you did, where you focussed your effort, etc.~~
 
 ## Bonus (Highly Encouraged)
 
