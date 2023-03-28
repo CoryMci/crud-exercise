@@ -7,8 +7,7 @@ exports.employee_list = async function (req, res, next) {
     const employees = await sqlite.asyncQuery("SELECT * FROM employees");
     return res.status(200).json(employees);
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({ error: error.message });
+    return res.status(500).json({ errors: [error.message] });
   }
 };
 
@@ -30,8 +29,8 @@ exports.employee_create = [
 
       if (existingEmployee.length > 0) {
         return res
-          .status(300)
-          .json({ message: "Employee already exists with that id!" });
+          .status(400)
+          .json({ errors: ["Employee already exists with that id!"] });
       }
 
       await sqlite.asyncQuery(
@@ -53,8 +52,7 @@ exports.employee_create = [
         employee: req.body,
       });
     } catch (error) {
-      console.log(error);
-      return res.status(500).json({ error: error.message });
+      return res.status(500).json({ errors: [error.message] });
     }
   },
 ];
@@ -75,19 +73,19 @@ exports.employee_edit = [
       );
 
       if (existingEmployee.length === 0) {
-        return res.status(404).json({ message: "Employee not found" });
+        return res.status(404).json({ errors: ["Employee not found"] });
       }
 
       if (req.body.id !== req.params.id) {
-        const IdTaken = await sqlite.asyncQuery(
+        const idTaken = await sqlite.asyncQuery(
           "SELECT * FROM employees WHERE id = ?",
           [req.body.id]
         );
 
-        if (IdTaken.length > 0) {
+        if (idTaken.length > 0) {
           return res
             .status(400)
-            .json({ message: "The new employee ID is already taken" });
+            .json({ errors: ["Employee already exists with that id!"] });
         }
       }
 
@@ -115,7 +113,7 @@ exports.employee_edit = [
         employee: updatedEmployee[0],
       });
     } catch (error) {
-      return res.status(500).json({ error: error.message });
+      return res.status(500).json({ errors: [error.message] });
     }
   },
 ];
@@ -139,6 +137,6 @@ exports.employee_delete = async function (req, res, next) {
       message: "Employee successfully deleted",
     });
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    return res.status(500).json({ errors: [error.message] });
   }
 };
