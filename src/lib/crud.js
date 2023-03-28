@@ -42,17 +42,17 @@ export async function deleteEmployee(employee) {
   }
 }
 
-export async function editEmployee(employeeId, employee) {
+export async function editEmployee(employeeId, updatedEmployee) {
   try {
     const employeeInfo = new URLSearchParams({
-      id: employee.id,
-      name: employee.name,
-      code: employee.code,
-      profession: employee.profession,
-      color: employee.color,
-      branch: employee.branch,
-      city: employee.city,
-      assigned: employee.assigned,
+      id: updatedEmployee.id,
+      name: updatedEmployee.name,
+      code: updatedEmployee.code,
+      profession: updatedEmployee.profession,
+      color: updatedEmployee.color,
+      branch: updatedEmployee.branch,
+      city: updatedEmployee.city,
+      assigned: updatedEmployee.assigned,
     });
     const response = await connection.put(
       `/employees/${employeeId}`,
