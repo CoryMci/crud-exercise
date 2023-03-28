@@ -67,9 +67,6 @@ export default function EmployeeContainer() {
             employees={employees}
             handleEditClick={handleEditClick}
             handleDeleteClick={handleDeleteClick}
-            refreshEmployees={refreshEmployees}
-            setEditingEmployee={setEditingEmployee}
-            setFormVisibility={setFormVisibility}
           />
         )}
       </div>
